@@ -1,0 +1,7 @@
+
+<div id="grid">
+	<div ng-click="action.loadMore()">+</div>
+	<div ng-repeat="entry in entries">
+		<img ng-repeat="image in entry.images" ng-src="image.src" />
+	</div>
+</div>

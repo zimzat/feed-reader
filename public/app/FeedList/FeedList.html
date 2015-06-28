@@ -1,0 +1,6 @@
+
+<ul>
+	<li ng-repeat="feed in feeds">
+		<a ng-href="/feed/{{feed.feedId}}/entry">{{feed.title}} ({{feed.unreadCount}})</a>
+	</li>
+</ul>

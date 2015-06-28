@@ -1,0 +1,7 @@
+
+<ul>
+	<li ng-repeat="entry in entries">
+		<a ng-click="action.seek($index)" ng-href="/entry/{{entry.entryId}}">{{entry.title}}</a><br />
+		<small>{{entry.feed}}</small>
+	</li>
+</ul>

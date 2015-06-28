@@ -11,7 +11,8 @@
         "corneltek/pux": "^1.5",
         "doctrine/dbal": "^2.5",
         "monolog/monolog": "^1.14",
-        "fguillot/picofeed": "^0.1.4"
+        "fguillot/picofeed": "^0.1.4",
+        "zimzat/db-changeset-manager": "^0.3.1"
     },
     "require-dev": {
         "php-console/php-console": "^3.1"

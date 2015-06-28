@@ -1,0 +1,13 @@
+
+<ul>
+	<li ng-show="summary.recent">
+		<a href="/category/0/entry">Recent Entries ({{summary.recent}})</a>
+	</li>
+	<li ng-repeat="category in summary.categories">
+		<a ng-href="/category/{{category.categoryId}}/feed">{{category.title}} ({{category.unreadCount}})</a>
+		<a ng-href="/category/{{category.categoryId}}/entry">All</a>
+	</li>
+	<li>
+		<a href="/category/10/entry/random">Marked Hedonism</a>
+	</li>
+</ul>

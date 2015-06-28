@@ -1,0 +1,24 @@
+{
+  "name": "reader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "connect-modrewrite": "^0.8.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-connect": "^0.10.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-newer": "^1.1.1",
+    "grunt-ng-annotate": "^1.0.1",
+    "load-grunt-tasks": "^3.2.0"
+  },
+  "dependencies": {
+    "angular-hotkeys": "^1.4.5"
+  }
+}

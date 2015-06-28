@@ -1,0 +1,55 @@
+* Get list of categories and the count of unread entries in each.
+* Get list of feeds in a category and the count of unread entries in each.
+* Get list of unread entries in a category.
+* Get list of unread entries in a feed.
+* Get list of unread entries.
+* Get entry.
+* Set entry is read or starred.
+* Get list of randomized marked entries in a category or feed.
+
+SELECT COUNT(*)
+FROM Entry AS e
+WHERE e.isRead = false
+	AND e.dateCreated >= ?;
+
+SELECT c.categoryId, c.title, COUNT(e.entryId)
+FROM Category AS c
+	JOIN Feed AS f USING (categoryId)
+	JOIN Entry AS e USING (feedId)
+WHERE e.isRead = false
+GROUP BY c.categoryId;
+
+SELECT f.feedId, f.title, COUNT(e.entryId)
+FROM Category AS c
+	JOIN Feed AS f USING (categoryId)
+	JOIN Entry AS e USING (feedId)
+WHERE e.isRead = false
+	AND c.categoryId = ?
+GROUP BY f.feedId;
+
+SELECT c.title AS category, f.title AS feed, e.title
+FROM Category AS c
+	JOIN Feed AS f USING (categoryId)
+	JOIN Entry AS e USING (feedId)
+WHERE e.isRead = false
+	AND (f.feedId = ? OR f.categoryId = ?);
+
+SELECT *
+FROM Entry AS e
+	JOIN EntryContent AS ec USING (entryId)
+WHERE e.entryId = ?;
+
+SELECT c.title AS category, f.title AS feed, e.title, (DATEDIFF(NOW(), dateReadLast) + 1) * RAND() AS randWeight
+FROM Category AS c
+	JOIN Feed AS f USING (categoryId)
+	JOIN Entry AS e USING (feedId)
+WHERE e.isMarked = true
+	AND (f.feedId = ? OR f.categoryId = ?)
+ORDER BY randWeight DESC
+LIMIT 100;
+
+UPDATE Entry AS e
+SET e.isRead = true,
+	e.dateLastRead = UTC_NOW()
+WHERE e.entryId = ?;
+

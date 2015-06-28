@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="reader" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="reader" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="reader" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="reader" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="Reader" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="Reader" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="Reader" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="Reader" class="no-js"> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Reader</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<base href="/">
 	</head>
 	<body>
 		<!--[if lt IE 7]>
@@ -17,9 +18,8 @@
 
 		<div ng-view></div>
 
-		<script src="angular.js"></script>
-		<script src="angular-resource.js"></script>
-		<script src="angular-route.js"></script>
-		<script src="app/reader.module.js"></script>
+		<script src="vendor.min.js"></script>
+		<script src="app.min.js"></script>
 	</body>
 </html>
+ 

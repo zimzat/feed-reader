@@ -1,0 +1,9 @@
+
+<div>
+	<button ng-click="action.goPrevious()">Previous</button>
+	<button ng-click="action.goNext()">Next</button>
+	<h4><a ng-href="{{entry.url}}">{{entry.title}}</a></h4>
+	<div>Read: {{entry.isRead ? 'Yes' : 'No'}}</div>
+	<div>Marked: {{entry.isMarked ? 'Yes' : 'No'}}</div>
+	<div ng-bind-html="entry.content | sanitize"></div>
+</div>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "727497b9620ed92d7d7b8ca8396d6308",
+    "hash": "b5583c9aed2be6386c7b521a7ad61fff",
     "packages": [
         {
             "name": "corneltek/pux",
@@ -671,6 +671,46 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "zimzat/db-changeset-manager",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zimzat/db-changeset-manager.git",
+                "reference": "2f18708660d5bb314c465d3a6b4f8a292f692e77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zimzat/db-changeset-manager/zipball/2f18708660d5bb314c465d3a6b4f8a292f692e77",
+                "reference": "2f18708660d5bb314c465d3a6b4f8a292f692e77",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": ">=5.4.0"
+            },
+            "bin": [
+                "bin/dbChangeManager.php"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DbVcs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zimzat",
+                    "email": "zimzat@zimzat.com"
+                }
+            ],
+            "description": "Automate the process of applying SQL files (changesets) to databases of different environments or users.",
+            "time": "2015-05-14 21:39:16"
         }
     ],
     "packages-dev": [
