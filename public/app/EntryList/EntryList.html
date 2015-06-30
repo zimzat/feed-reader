@@ -1,9 +1,14 @@
 
 <div class="row">
 	<ul class="list-group">
-		<li class="list-group-item toolbar clearfix">
-			<a class="btn pull-left" ng-href="{{backButton.url}}">{{backButton.title}}</a>
-			{{pageTitle}}
+		<li class="list-group-item toolbar">
+			<div class="col-xs-2">
+				<a class="btn" ng-href="{{backButton.url}}">{{backButton.title}}</a>
+			</div>
+			<div class="col-xs-8 text-center">
+				{{pageTitle}}
+			</div>
+			<div class="col-xs-2"></div>
 		</li>
 		<li class="list-group-item item" ng-repeat="entry in entries">
 			<a ng-click="action.seek($index)" ng-href="/entry/{{entry.entryId}}?categoryId={{categoryId}}{{feedId?'&feedId='+feedId:''}}">

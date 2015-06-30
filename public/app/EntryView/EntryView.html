@@ -1,33 +1,38 @@
 
 <div class="row">
 	<ul class="list-group">
-		<li class="list-group-item toolbar clearfix">
-			<a class="btn pull-left" ng-href="{{backButton.url}}">{{backButton.title}}</a>
-			{{pageTitle}}
+		<li class="list-group-item toolbar">
+			<div class="col-xs-2">
+				<a class="btn" ng-href="{{backButton.url}}">{{backButton.title}}</a>
+			</div>
+			<div class="col-xs-8 text-center">
+				{{pageTitle}}
+			</div>
+			<div class="col-xs-2"></div>
 		</li>
-	</ul>
-	<ul class="list-group">
-		<li class="list-group-item text-center clearfix">
+		<li class="list-group-item pane-bar text-center clearfix">
 			<button class="btn btn-sm btn-default pull-left" ng-click="action.goPrevious()">Previous</button>
 			<button class="btn btn-sm btn-default pull-right" ng-click="action.goNext()">Next</button>
-			<a ng-href="{{entry.url}}">{{entry.title}}</a>
+			<a style="font-size: 15px;" ng-href="{{entry.url}}">{{entry.title}}</a>
 		</li>
 	</ul>
 	<div class="article-content" ng-bind-html="entry.content | sanitize"></div>
 
-	<ul class="list-group">
-		<li class="list-group-item text-center clearfix">
-			<button class="btn btn-sm btn-default pull-left" ng-click="action.goPrevious()">Previous</button>
-			<button class="btn btn-sm btn-default pull-right" ng-click="action.goNext()">Next</button>
-			Navigation
-		</li>
-		<li class="list-group-item clearfix">
-			<button class="btn btn-sm btn-default pull-right" ng-click="action.toggleMarked()">{{entry.isMarked ? 'Yes' : 'No'}}</button>
-			Starred
-		</li>
-		<li class="list-group-item clearfix">
-			<button class="btn btn-sm btn-default pull-right" ng-click="action.toggleRead()">{{entry.isRead ? 'No' : 'Yes'}}</button>
-			Unread
-		</li>
-	</ul>
+	<div style="padding: 3px;">
+		<ul class="list-group pane-bars">
+			<li class="list-group-item text-center clearfix">
+				<button class="btn btn-sm btn-default pull-left" ng-click="action.goPrevious()">Previous</button>
+				<button class="btn btn-sm btn-default pull-right" ng-click="action.goNext()">Next</button>
+				Navigation
+			</li>
+			<li class="list-group-item clearfix">
+				<button class="btn btn-sm btn-default pull-right" ng-click="action.toggleMarked()">{{entry.isMarked ? 'Yes' : 'No'}}</button>
+				Starred
+			</li>
+			<li class="list-group-item clearfix">
+				<button class="btn btn-sm btn-default pull-right" ng-click="action.toggleRead()">{{entry.isRead ? 'No' : 'Yes'}}</button>
+				Unread
+			</li>
+		</ul>
+	</div>
 </div>

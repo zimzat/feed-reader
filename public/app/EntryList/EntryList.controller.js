@@ -49,7 +49,8 @@
 			combo: 'n',
 			description: 'Next: Go to first entry',
 			callback: function() {
-				$location.url('/entry/' + $scope.entries[0].entryId)
+				ListResult.seek(0);
+				$location.url('/entry/' + $scope.entries[0].entryId + '?categoryId=' + $routeParams.categoryId + '&feedId=' + ($routeParams.feedId || ''));
 			}
 		});
 	});

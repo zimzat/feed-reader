@@ -9,15 +9,12 @@ html, body {
 
 .list-group-item {
 	background-color: inherit;
-	padding: 0px;
-	border: none;
-	border-bottom: 1px solid #E0E0E0;
-	line-height: normal;
 }
 
 .list-group-item.toolbar {
 	background-color: #AAA;
-	text-align: center;
+	border: 0px;
+	border-radius: 0px;
 	border-bottom: 1px solid #888;
 	padding: 10px;
 	color: white;
@@ -25,7 +22,7 @@ html, body {
 	height: 44px;
 }
 .list-group-item.toolbar .btn {
-	margin-top: -5px;
+	margin-top: -9px;
 	margin-left: -4px;
 
 	border-radius: 5px;
@@ -45,11 +42,30 @@ html, body {
     background-image: linear-gradient(top, #b3b3b3 -25%, #4d4d4d 75%);
 }
 
+.list-group-item.item {
+	padding: 0px;
+	border: none;
+	border-bottom: 1px solid #E0E0E0;
+	line-height: normal;
+}
+
 .list-group-item.item a {
 	display: block;
 	padding: 8px 32px 8px 10px;
 	color: black;
 }
+/*.list-group-item.item a:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  position: relative;
+  color: black;
+  right: 100%;
+  top: 50%;
+  z-index: 1;
+}*/
 .list-group-item.item a:hover, .list-group-item.item a:active, .list-group-item.item a:focus {
 	text-decoration: none;
 }

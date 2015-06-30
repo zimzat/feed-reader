@@ -18,7 +18,7 @@
 			combo: 'n',
 			description: 'Next: Go to first feed',
 			callback: function() {
-				$location.url('/feed/' + $scope.feeds[0].feedId + '/entry')
+				$location.url('/feed/' + $scope.feeds[0].feedId + '/entry?categoryId=' + $routeParams.categoryId);
 			}
 		});
 	});

@@ -42,6 +42,9 @@
 				.on('mousewheel wheel', function (e) {
 					document.getElementById('grid-layout').scrollLeft += Math.min(200, window.innerWidth / 6) * ((e.wheelDelta || -e.deltaY) > 0 ? -1 : 1);
 				});
+			$scope.$on('$destroy', function() {
+				$(window).off('mousewheel wheel');
+			});
 		})(angular.element);
 
 		var hoverEntry = null;

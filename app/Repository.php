@@ -67,12 +67,13 @@ class Repository {
 		}
 		if (!$feedId && !$categoryId) {
 			$sql .= " AND e.dateCreated >= ? ";
+			$sql .= " AND c.categoryId != 10 ";
 			$bind[] = date('c', strtotime('-48 hours'));
 		}
 
 		$sql .= "
-			ORDER BY e.dateCreated
-			DESC LIMIT 100
+			ORDER BY e.dateCreated DESC
+			LIMIT 100
 		";
 		return $this->db->executeQuery($sql, $bind)->fetchAll();
 	}

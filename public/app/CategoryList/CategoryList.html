@@ -1,9 +1,14 @@
 
 <div class="row">
 	<ul class="list-group">
-		<li class="list-group-item toolbar clearfix">
-			<button class="btn pull-left" ng-click="action.logout()">Logout</button>
-			Home
+		<li class="list-group-item toolbar">
+			<div class="col-xs-2">
+				<button class="btn" ng-click="action.logout()">Logout</button>
+			</div>
+			<div class="col-xs-8 text-center">
+				Home
+			</div>
+			<div class="col-xs-2"></div>
 		</li>
 		<li class="list-group-item item" ng-show="summary.recent">
 			<a href="/category/0/entry">Recent Entries <span class="badge">{{summary.recent}}</span></a>

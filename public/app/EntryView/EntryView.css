@@ -1,0 +1,25 @@
+
+.article-content {
+	font-size: initial;
+	font-weight: initial;
+	line-height: initial;
+	padding: 0px 10px;
+}
+
+.list-group.pane-bars .list-group-item, .list-group .list-group-item.pane-bar {
+	margin: 6px 3px 0px 3px;
+	border: 1px solid #999;
+
+	background-color: #DDD;
+	padding: 4px 8px;
+	font-size: 16px;
+	line-height: 32px;
+
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+
+.list-group.pane-bars .list-group-item + .list-group-item {
+	margin-top: 3px;
+}

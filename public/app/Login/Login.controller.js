@@ -1,8 +1,13 @@
 (function (angular) {
 	'use strict';
 
-	angular.module('Reader.Login').controller('Reader.Login.Controller', function ($scope, $location, hotkeys) {
-		$location.url('/category');
+	angular.module('Reader.Login').controller('Reader.Login.Controller', function ($scope, $location, $resource, hotkeys) {
+		$location.url('/category'); return;
+
+		$scope.credentials = {
+			username: '',
+			password: ''
+		};
 
 		hotkeys.bindTo($scope).add({
 			combo: 'enter',
@@ -12,14 +17,18 @@
 			allowIn: ['INPUT']
 		});
 
-		$scope.credentials = {
-			username: '',
-			password: ''
-		};
-
 		$scope.action = {
 			login: function(credentials) {
-				console.log(credentials);
+				if (credentials.username === '' || credentials.password === '') {
+					return;
+				}
+
+				$resource(config.apiUrl + '/authentication/login').save({}, credentials, function() {
+					console.log(arguments);
+					$location.refresh();
+				}, function() {
+					console.log(arguments);
+				});
 			}
 		};
 	});

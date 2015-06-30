@@ -41,14 +41,14 @@
 					if (ListResult.isBeginning()) {
 						$location.url('/');
 					} else {
-						$location.url('/entry/' + ListResult.previous().entryId);
+						$location.url('/entry/' + ListResult.previous().entryId + '?categoryId=' + $routeParams.categoryId + '&feedId=' + ($routeParams.feedId||''));
 					}
 				},
 				goNext: function () {
 					if (ListResult.isEnd()) {
 						$location.url('/');
 					} else {
-						$location.url('/entry/' + ListResult.next().entryId);
+						$location.url('/entry/' + ListResult.next().entryId + '?categoryId=' + $routeParams.categoryId + '&feedId=' + ($routeParams.feedId||''));
 					}
 				},
 				toggleMarked: function() {
@@ -78,6 +78,24 @@
 			}).add({
 				combo: 'm',
 				description: 'Move scroll to next image.',
+				callback: function() {
+
+				}
+			}).add({
+				combo: 'f',
+				description: 'Toggle full screen slideshow of images.',
+				callback: function() {
+
+				}
+			}).add({
+				combo: 'd',
+				description: 'View/Edit slideshow interval.',
+				callback: function() {
+
+				}
+			}).add({
+				combo: 'space',
+				description: 'Toggle automatic slideshow advancement.',
 				callback: function() {
 
 				}
