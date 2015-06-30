@@ -25,6 +25,7 @@
     "angular-hotkeys": "^1.4.5",
     "angular-resource": "^1.4.1",
     "angular-route": "^1.4.1",
-    "bootstrap": "^3.3.5"
+    "bootstrap": "^3.3.5",
+    "jquery": "^2.1.4"
   }
 }

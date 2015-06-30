@@ -8,6 +8,9 @@
 				declare: function (input) {
 					results = input;
 				},
+				remaining: function() {
+					return (results.length > 0 ? results.length - 1 : 0) - current;
+				},
 				seek: function(index) {
 					if (index >= 0 && index < results.length) {
 						current = index;
@@ -16,6 +19,11 @@
 				current: function () {
 					if (results.length > 0) {
 						return results[current];
+					}
+				},
+				peek: function() {
+					if (!operations.isEnd()) {
+						return results[current + 1];
 					}
 				},
 				next: function () {
@@ -29,7 +37,7 @@
 					}
 				},
 				isEnd: function () {
-					return current >= results.length;
+					return current >= results.length - 1;
 				},
 				isBeginning: function () {
 					return current === 0;

@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('Reader.EntryView')
-		.controller('Reader.EntryView.Controller', function ($scope, $resource, $routeParams, $location, hotkeys, config, ListResult) {
+		.controller('Reader.EntryView.Controller', function ($scope, $resource, $routeParams, $location, $timeout, hotkeys, config, ListResult, FullscreenSlideshow) {
 			var Entry = $resource(config.apiUrl + '/entry/:entryId', {entryId: $routeParams.entryId}, {
 				read: {method: 'POST', url: config.apiUrl + '/entry/:entryId/read'},
 				mark: {method: 'POST', url: config.apiUrl + '/entry/:entryId/marked'}
@@ -16,6 +16,16 @@
 				$resource(config.apiUrl + '/feed/:feedId', {feedId: $scope.entry.feedId}).get({}, function(data) {
 					$scope.pageTitle = data.title;
 				});
+				$timeout(function() {
+					$scope.$emit('entryLoaded', $scope.entry);
+				});
+				if (!ListResult.isEnd()) {
+					Entry.get({entryId: ListResult.peek().entryId}, function(data) {
+						window.jQuery(data.content).find('img').each(function() {
+							new Image().src = window.jQuery(this).attr('src');
+						});
+					});
+				}
 			});
 
 			if ($routeParams.feedId) {
@@ -67,13 +77,21 @@
 				combo: 'p',
 				description: 'Previous: Go to previous entry or back to main page.',
 				callback: function() {
-					$scope.action.goPrevious();
+					if (FullscreenSlideshow.isActive() && FullscreenSlideshow.hasPrevious()) {
+						FullscreenSlideshow.goPrevious();
+					} else {
+						$scope.action.goPrevious();
+					}
 				}
 			}).add({
 				combo: 'n',
 				description: 'Next: Go to next entry or back to main page.',
 				callback: function() {
-					$scope.action.goNext();
+					if (FullscreenSlideshow.isActive() && FullscreenSlideshow.hasNext()) {
+						FullscreenSlideshow.goNext();
+					} else {
+						$scope.action.goNext();
+					}
 				}
 			}).add({
 				combo: 'm',
@@ -85,19 +103,19 @@
 				combo: 'f',
 				description: 'Toggle full screen slideshow of images.',
 				callback: function() {
-
+					FullscreenSlideshow.enableDisable();
 				}
 			}).add({
 				combo: 'd',
 				description: 'View/Edit slideshow interval.',
 				callback: function() {
-
+					FullscreenSlideshow.inputSlideDelay();
 				}
 			}).add({
 				combo: 'space',
 				description: 'Toggle automatic slideshow advancement.',
 				callback: function() {
-
+					FullscreenSlideshow.pausePlay();
 				}
 			}).add({
 				combo: 's',
