@@ -19,22 +19,38 @@ module.exports = function (grunt) {
 		},
 		watch: {
 			html: {
-				files: ['public/**/*'],
+				files: ['public/index.html', 'public/app/**/*'],
 				tasks: ['build'],
 				options: {
 					livereload: true
 				}
 			}
 		},
+		concat: {
+			vendor: {
+				src: [
+					'node_modules/bootstrap/dist/css/bootstrap.css',
+					'node_modules/bootstrap/dist/css/bootstrap-theme.css'
+				],
+				dest: 'public/vendor.css'
+			},
+			app: {
+				src: [
+					'public/app/**/*.css'
+				],
+				dest: 'public/app.css'
+			}
+		},
 		uglify: {
 			options: {
 				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd hh:MM:ss") %> */\n'
 			},
-			lib: {
+			vendor: {
 				src: [
-					'public/lib/angular.js',
-					'public/lib/angular*.js',
-					'node_modules/angular-hotkeys/build/hotkeys.min.js'
+					'node_modules/angular/angular.js',
+					'node_modules/angular-route/angular-route.js',
+					'node_modules/angular-resource/angular-resource.js',
+					'node_modules/angular-hotkeys/build/hotkeys.js'
 				],
 				dest: 'public/vendor.min.js'
 			},
@@ -59,7 +75,7 @@ module.exports = function (grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['newer:uglify:lib', 'newer:uglify:app']);
+	grunt.registerTask('build', ['newer:uglify:vendor', 'newer:uglify:app', 'newer:concat:vendor', 'newer:concat:app']);
 	grunt.registerTask('server', ['build', 'connect:server', 'watch']);
 
 };

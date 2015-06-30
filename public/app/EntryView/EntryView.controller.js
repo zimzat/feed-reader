@@ -12,7 +12,29 @@
 				if (!$scope.entry.isRead) {
 					$scope.action.toggleRead();
 				}
+
+				$resource(config.apiUrl + '/feed/:feedId', {feedId: $scope.entry.feedId}).get({}, function(data) {
+					$scope.pageTitle = data.title;
+				});
 			});
+
+			if ($routeParams.feedId) {
+				$scope.backButton = {
+					url: '/feed/' + $routeParams.feedId + '/entry?categoryId=' + $routeParams.categoryId,
+					title: ''
+				};
+				$resource(config.apiUrl + '/feed/:feedId', {feedId: $routeParams.feedId}).get({}, function(data) {
+					$scope.backButton.title = data.title;
+				});
+			} else if ($routeParams.categoryId) {
+				$scope.backButton = {
+					url: '/category/' + $routeParams.categoryId + '/entry',
+					title: ''
+				};
+				$resource(config.apiUrl + '/category/:categoryId', {categoryId: $routeParams.categoryId}).get({}, function(data) {
+					$scope.backButton.title = data.title;
+				});
+			}
 
 			$scope.action = {
 				goPrevious: function () {

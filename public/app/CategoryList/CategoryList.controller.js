@@ -5,6 +5,12 @@
 		var Category = $resource(config.apiUrl + '/category');
 		$scope.summary = Category.get();
 
+		$scope.action = {
+			logout: function() {
+				$location.url('/');
+			}
+		};
+
 		hotkeys.bindTo($scope).add({
 			combo: 'p',
 			description: 'Previous: Go back to main category listing',

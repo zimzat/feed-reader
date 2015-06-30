@@ -58,10 +58,12 @@ class Application {
 
 		$this->router = new \Pux\Mux();
 		$this->router->get('/api/category', '\\Reader\\Controller\\Category:main');
+		$this->router->get('/api/category/:categoryId', '\\Reader\\Controller\\Category:get');
 		$this->router->get('/api/category/:categoryId/feed', '\\Reader\\Controller\\Category:listFeed');
 		$this->router->get('/api/category/:categoryId/entry', '\\Reader\\Controller\\Category:listEntry');
 		$this->router->get('/api/category/:categoryId/entry/random', '\\Reader\\Controller\\Category:listEntryRandom');
 		$this->router->get('/api/feed/:feedId/entry', '\\Reader\\Controller\\Entry:listFeed');
+		$this->router->get('/api/feed/:feedId', '\\Reader\\Controller\\Feed:get');
 		$this->router->get('/api/entry/:entryId', '\\Reader\\Controller\\Entry:get');
 		$this->router->options('/api/entry/:entryId/read', __CLASS__ . ':options');
 		$this->router->options('/api/entry/:entryId/marked', __CLASS__ . ':options');

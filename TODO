@@ -2,5 +2,9 @@
 Add user credential check and token usage.
 Add ability to add, add, edit, disable, and discover feeds.
 
-Beautify frontend with styles.
 Add existing behavior for ImageScrollerView.
+* Missing: m = scroll to next image.
+* Missing: n = load images only.
+* Missing: R = mark all entries read.
+
+Add fullscreen slideshow to regular entry viewer.

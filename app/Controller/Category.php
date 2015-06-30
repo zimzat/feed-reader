@@ -18,6 +18,10 @@ class Category {
 		];
 	}
 
+	public function get($categoryId) {
+		return $this->application->db->select('Category', ['categoryId' => $categoryId])->fetch();
+	}
+
 	public function listFeed($categoryId) {
 		$repository = new \Reader\Repository($this->application->db);
 		return $repository->getUnreadFeeds($categoryId);

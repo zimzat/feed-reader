@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('Reader.ListResult').service('ListResult', function () {
-		var results,
+		var results = [],
 			current = 0,
 			operations = {
 				declare: function (input) {

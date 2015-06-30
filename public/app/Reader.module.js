@@ -43,6 +43,10 @@
 					templateUrl: 'app/EntryList/EntryList.html',
 					controller: 'Reader.EntryList.Controller'
 				})
+				.when('/category/:categoryId/entry/image-scroller', {
+					templateUrl: 'app/ImageScrollerView/ImageScrollerView.html',
+					controller: 'Reader.ImageScrollerView.Controller'
+				})
 				.when('/category/:categoryId/entry/random', {
 					templateUrl: 'app/EntryList/EntryList.html',
 					controller: 'Reader.EntryList.Controller'

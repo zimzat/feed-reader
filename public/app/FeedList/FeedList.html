@@ -1,6 +1,12 @@
 
-<ul>
-	<li ng-repeat="feed in feeds">
-		<a ng-href="/feed/{{feed.feedId}}/entry">{{feed.title}} ({{feed.unreadCount}})</a>
-	</li>
-</ul>
+<div class="row">
+	<ul class="list-group">
+		<li class="list-group-item toolbar clearfix">
+			<a class="btn pull-left" href="/">Home</a>
+			{{category.title}}
+		</li>
+		<li class="list-group-item item" ng-repeat="feed in feeds">
+			<a ng-href="/feed/{{feed.feedId}}/entry?categoryId={{categoryId}}">{{feed.title}} <span class="badge">{{feed.unreadCount}}</span></a>
+		</li>
+	</ul>
+</div>

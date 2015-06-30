@@ -1,13 +1,20 @@
 
-<ul>
-	<li ng-show="summary.recent">
-		<a href="/category/0/entry">Recent Entries ({{summary.recent}})</a>
-	</li>
-	<li ng-repeat="category in summary.categories">
-		<a ng-href="/category/{{category.categoryId}}/feed">{{category.title}} ({{category.unreadCount}})</a>
-		<a ng-href="/category/{{category.categoryId}}/entry">All</a>
-	</li>
-	<li>
-		<a href="/category/10/entry/random">Marked Hedonism</a>
-	</li>
-</ul>
+<div class="row">
+	<ul class="list-group">
+		<li class="list-group-item toolbar clearfix">
+			<button class="btn pull-left" ng-click="action.logout()">Logout</button>
+			Home
+		</li>
+		<li class="list-group-item item" ng-show="summary.recent">
+			<a href="/category/0/entry">Recent Entries <span class="badge">{{summary.recent}}</span></a>
+		</li>
+		<li class="list-group-item item" ng-repeat="category in summary.categories">
+			<a ng-show="category.categoryId == 10" class="pull-left" ng-href="/category/{{category.categoryId}}/entry/image-scroller" style="padding-right: 15px;">#</a>
+			<a class="pull-right" ng-href="/category/{{category.categoryId}}/entry">All</a>
+			<a class="" ng-href="/category/{{category.categoryId}}/feed">{{category.title}} <span class="badge">{{category.unreadCount}}</span></a>
+		</li>
+		<li class="list-group-item item">
+			<a href="/category/10/entry/random">Marked Hedonism</a>
+		</li>
+	</ul>
+</div>

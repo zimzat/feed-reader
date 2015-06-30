@@ -1,0 +1,70 @@
+
+#grid-layout {
+	overflow-x: scroll;
+	white-space: nowrap;
+	height: 100%;
+	background-color: black;
+	left: 0; top: 0; bottom: 0; right: 0;
+	position: absolute;
+	padding: 5px;
+}
+
+#grid-layout > div {
+	display: inline-block;
+	height: 100%;
+}
+
+#grid-layout #grid-loader {
+	display: inline-block !important;
+	border: 2px solid #444;
+	background-color: #777;
+	height: 100%;
+	width: 196px;
+	text-align: center;
+	line-height: 496px;
+	font-size: 40px;
+	vertical-align: top;
+}
+
+#grid-layout div {
+	padding: 3px;
+}
+
+#grid-layout div:nth-child(3n+1) {
+	border: 5px solid yellow;
+}
+#grid-layout div:nth-child(3n+2) {
+	border: 5px solid orange;
+}
+#grid-layout div:nth-child(3n+3) {
+	border: 5px solid red;
+}
+
+#grid-layout div + div {
+	margin-left: 5px;
+}
+
+#grid-layout div.starred {
+	-moz-box-shadow:    0 0 30px green;
+	-webkit-box-shadow: 0 0 30px green;
+	box-shadow:         0 0 30px green;
+	border: 5px solid green;
+}
+
+#grid-layout div.read img {
+	opacity: 0.2;
+}
+
+#grid-layout img {
+	height: 100%;
+	max-width: 1600px;
+}
+
+#grid-layout div img + img {
+	margin-left: 5px;
+}
+
+#grid-layout img[src$=".gif"] {
+	width: 0px;
+	border-left: 10px solid pink;
+}

@@ -1,9 +1,33 @@
 
-<div>
-	<button ng-click="action.goPrevious()">Previous</button>
-	<button ng-click="action.goNext()">Next</button>
-	<h4><a ng-href="{{entry.url}}">{{entry.title}}</a></h4>
-	<div>Read: {{entry.isRead ? 'Yes' : 'No'}}</div>
-	<div>Marked: {{entry.isMarked ? 'Yes' : 'No'}}</div>
-	<div ng-bind-html="entry.content | sanitize"></div>
+<div class="row">
+	<ul class="list-group">
+		<li class="list-group-item toolbar clearfix">
+			<a class="btn pull-left" ng-href="{{backButton.url}}">{{backButton.title}}</a>
+			{{pageTitle}}
+		</li>
+	</ul>
+	<ul class="list-group">
+		<li class="list-group-item text-center clearfix">
+			<button class="btn btn-sm btn-default pull-left" ng-click="action.goPrevious()">Previous</button>
+			<button class="btn btn-sm btn-default pull-right" ng-click="action.goNext()">Next</button>
+			<a ng-href="{{entry.url}}">{{entry.title}}</a>
+		</li>
+	</ul>
+	<div class="article-content" ng-bind-html="entry.content | sanitize"></div>
+
+	<ul class="list-group">
+		<li class="list-group-item text-center clearfix">
+			<button class="btn btn-sm btn-default pull-left" ng-click="action.goPrevious()">Previous</button>
+			<button class="btn btn-sm btn-default pull-right" ng-click="action.goNext()">Next</button>
+			Navigation
+		</li>
+		<li class="list-group-item clearfix">
+			<button class="btn btn-sm btn-default pull-right" ng-click="action.toggleMarked()">{{entry.isMarked ? 'Yes' : 'No'}}</button>
+			Starred
+		</li>
+		<li class="list-group-item clearfix">
+			<button class="btn btn-sm btn-default pull-right" ng-click="action.toggleRead()">{{entry.isRead ? 'No' : 'Yes'}}</button>
+			Unread
+		</li>
+	</ul>
 </div>
