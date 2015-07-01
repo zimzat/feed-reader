@@ -73,6 +73,9 @@
 				}
 			};
 
+			FullscreenSlideshow.goNextEntry = function() { $scope.$apply($scope.action.goNext); };
+			FullscreenSlideshow.goPreviousEntry = function() { $scope.$apply($scope.action.goPrevious); };
+
 			hotkeys.bindTo($scope).add({
 				combo: 'p',
 				description: 'Previous: Go to previous entry or back to main page.',

@@ -74,7 +74,7 @@
 				if (!$cover.length) {
 					$cover = createBackgroundCover();
 				}
-				$cover.prependTo($('.article-content'));
+				$cover.prependTo($(document.body));
 
 				$cover.text([activeImg, '/', $imgs.length, ', ', ListResult.remaining()].join(''));
 				if (entry.isMarked) {
@@ -91,6 +91,8 @@
 			if (hasPrevious()) {
 				activeImg -= 2;
 				resizeAndRotateImages();
+			} else {
+				operations.goPreviousEntry();
 			}
 		}
 
@@ -101,6 +103,8 @@
 		function nextImg() {
 			if (hasNext()) {
 				resizeAndRotateImages();
+			} else {
+				operations.goNextEntry();
 			}
 		}
 
@@ -112,7 +116,7 @@
 			if (!$cover.length) {
 				$cover = createBackgroundCover();
 			}
-			$cover.prependTo($('.article-content'));
+			$cover.prependTo($(document.body));
 
 			$('img:first').on('load', function () {
 				resizeAndRotateImages();
@@ -242,7 +246,7 @@
 			return activeMode;
 		}
 
-		return {
+		var operations = {
 			isActive: isActive,
 			enableDisable: enableDisable,
 			pausePlay: pausePlay,
@@ -250,8 +254,12 @@
 			hasNext: hasNext,
 			hasPrevious: hasPrevious,
 			goNext: nextImg,
-			goPrevious: prevImg
+			goPrevious: prevImg,
+			goNextEntry: function() {},
+			goPreviousEntry: function() {}
 		};
+
+		return operations;
 
 	});
 
