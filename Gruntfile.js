@@ -1,11 +1,11 @@
 
 module.exports = function (grunt) {
 
-	grunt.config('env', grunt.option('env') || process.env.ENV || 'development');
+	grunt.config('env', grunt.option('env') || process.env.ENV || 'dev');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		env: grunt.option('env') || process.env.ENV || 'dev',
+		env: grunt.config('env'),
 		connect: {
 			server: {
 				options: {

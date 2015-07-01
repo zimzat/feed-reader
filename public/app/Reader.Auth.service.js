@@ -32,7 +32,7 @@
 			service.responseError = function (response) {
 				if (response.status === 401 && response.config.url.indexOf('login') === -1) {
 					delete sessionStorage.authToken;
-					$location.url('/');
+					$location.url('/login');
 				}
 
 				return $q.reject(response);

@@ -33,14 +33,15 @@ class Application {
 	}
 
 	public function bootstrap() {
-		$configFile = __DIR__ . '/../config/' . strtolower(getenv('APPLICATION_ENV') ?: 'LOCAL') . '.php';
+		ini_set('session.use_cookies', false);
+
+		$env = (file_exists(__DIR__ . '/../config/env.php')) ? require __DIR__ . '/../config/env.php' : 'LOCAL';
+		$configFile = __DIR__ . '/../config/' . strtolower($env) . '.php';
 		if (!file_exists($configFile)) {
 			throw new \Exception('Configuration file not found or incorrect application environment set.');
 		}
-
-		ini_set('session.use_cookies', false);
-
 		$this->config = require $configFile;
+		$this->config['env'] = $env;
 
 		$this->log = new \Monolog\Logger('', $this->config['logger']);
 		\PhpConsole\Connector::getInstance()->setSourcesBasePath(__DIR__);

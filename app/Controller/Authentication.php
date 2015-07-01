@@ -20,7 +20,9 @@ class Authentication {
 		);
 
 		if ($isValidUser) {
-			session_destroy();
+			if (session_status() === PHP_SESSION_ACTIVE) {
+				session_destroy();
+			}
 			unset($_COOKIE[session_name()]);
 			session_regenerate_id(true);
 			session_start();
@@ -33,7 +35,9 @@ class Authentication {
 	}
 
 	public function logout() {
-		session_destroy();
+		if (session_status() === PHP_SESSION_ACTIVE) {
+			session_destroy();
+		}
 		unset($_COOKIE[session_name()]);
 		session_regenerate_id(true);
 		session_start();
