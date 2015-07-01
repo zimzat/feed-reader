@@ -1,16 +1,14 @@
 (function (angular) {
 	'use strict';
 
-	angular.module('Reader.Login').controller('Reader.Login.Controller', function ($scope, $location, $resource, hotkeys) {
-		$location.url('/category'); return;
-
+	angular.module('Reader.Login').controller('Reader.Login.Controller', function ($scope, $location, $resource, hotkeys, config) {
 		$scope.credentials = {
 			username: '',
 			password: ''
 		};
 
 		hotkeys.bindTo($scope).add({
-			combo: 'enter',
+			combo: 'return',
 			callback: function() {
 				$scope.action.login($scope.credentials);
 			},
@@ -23,11 +21,10 @@
 					return;
 				}
 
-				$resource(config.apiUrl + '/authentication/login').save({}, credentials, function() {
-					console.log(arguments);
-					$location.refresh();
+				$resource(config.apiUrl + '/authentication/login').save({}, credentials).$promise.then(function() {
+					$location.url('/');
 				}, function() {
-					console.log(arguments);
+					$scope.loginError = 'Invalid credentials';
 				});
 			}
 		};

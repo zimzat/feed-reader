@@ -7,7 +7,9 @@
 
 		$scope.action = {
 			logout: function() {
-				$location.url('/');
+				$resource(config.apiUrl + '/authentication/logout').save();
+				delete sessionStorage.authToken;
+				$location.url('/login');
 			}
 		};
 

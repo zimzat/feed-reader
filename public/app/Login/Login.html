@@ -2,11 +2,11 @@
 <div class="row">
 	<ul class="list-group">
 		<li class="list-group-item toolbar">
-			<div class="col-xs-2"></div>
+			<div class="col-xs-2 text-left"></div>
 			<div class="col-xs-8 text-center">
 				Login
 			</div>
-			<div class="col-xs-2">
+			<div class="col-xs-2 text-right">
 				<button class="btn" type="submit" ng-click="action.login(credentials)">Login</button>
 			</div>
 		</li>
@@ -19,4 +19,7 @@
 			<input style="background-color: #CCC;" id="password" name="password" type="password" class="form-control" placeholder="Password" required ng-model="credentials.password">
 		</li>
 	</ul>
+	<div ng-show="loginError" class="alert alert-danger">
+		{{loginError}}
+	</div>
 </div>

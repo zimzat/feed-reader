@@ -38,6 +38,8 @@ class Application {
 			throw new \Exception('Configuration file not found or incorrect application environment set.');
 		}
 
+		ini_set('session.use_cookies', false);
+
 		$this->config = require $configFile;
 
 		$this->log = new \Monolog\Logger('', $this->config['logger']);
@@ -62,13 +64,13 @@ class Application {
 		$return = null;
 
 		try {
-			$this->beforeRoute();
 			if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 				$this->doOptions();
 			} else {
+				$this->beforeRoute();
 				$return = $this->doRoute();
+				$this->afterRoute();
 			}
-			$this->afterRoute();
 		} catch (\Exception $e) {
 			$this->log->error($e->getMessage(), ['exception' => $e]);
 			if (http_response_code() === 200) {
@@ -92,6 +94,7 @@ class Application {
 
 	protected function beforeRoute() {
 		header('Access-Control-Allow-Origin: *');
+		header('Access-Control-Expose-Headers: Authorization');
 
 		$headers = apache_request_headers();
 		if (!empty($headers['Authorization'])) {
@@ -109,6 +112,7 @@ class Application {
 		$allowedMethods = ['POST', 'OPTIONS'];
 		$allowedHeaders = ['Content-type', 'Authorization'];
 
+		header('Access-Control-Allow-Origin: *');
 		header('Access-Control-Request-Methods: ' . implode(', ', $allowedMethods));
 		header('Access-Control-Allow-Headers: ' . implode(', ', $allowedHeaders));
 	}

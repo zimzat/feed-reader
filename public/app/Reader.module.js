@@ -15,12 +15,14 @@
 	]);
 
 	angular.module('Reader')
-		.run(function($location, hotkeys) {
+		.run(function($location, $resource, hotkeys, config) {
 			hotkeys.add({
 				combo: 'l',
 				description: 'Logout',
 				callback: function() {
-					$location.url('/');
+					$resource(config.apiUrl + '/authentication/logout').save();
+					delete sessionStorage.authToken;
+					$location.url('/login');
 				}
 			});
 		})
@@ -38,13 +40,13 @@
 					};
 			}
 		})())
-		.config(function ($routeProvider, $locationProvider, hotkeysProvider) {
+		.config(function ($routeProvider, $locationProvider, $httpProvider, hotkeysProvider) {
 			$routeProvider
-				.when('/', {
+				.when('/login', {
 					templateUrl: 'app/Login/Login.html',
 					controller: 'Reader.Login.Controller'
 				})
-				.when('/category', {
+				.when('/', {
 					templateUrl: 'app/CategoryList/CategoryList.html',
 					controller: 'Reader.CategoryList.Controller'
 				})
@@ -77,6 +79,8 @@
 				});
 
 			$locationProvider.html5Mode(true);
+
+			$httpProvider.interceptors.push('AuthInterceptor');
 
 			hotkeysProvider.useNgRoute = false;
 		});
