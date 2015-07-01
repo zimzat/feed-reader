@@ -1,7 +1,7 @@
 <?php
 
 try {
-	require '../../vendor/autoload.php';
+	require '../vendor/autoload.php';
 	$application = (new Reader\Application())->bootstrap();
 	$application->run();
 } catch (\Exception $e) {
