@@ -1,8 +1,11 @@
 
 module.exports = function (grunt) {
 
+	grunt.config('env', grunt.option('env') || process.env.ENV || 'development');
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		env: grunt.option('env') || process.env.ENV || 'dev',
 		connect: {
 			server: {
 				options: {
@@ -26,6 +29,13 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		clean: {
+			app: [
+				'public/app.css',
+				'public/app.min.js',
+				'public/app.html.js'
+			]
+		},
 		concat: {
 			vendor: {
 				src: [
@@ -43,7 +53,7 @@ module.exports = function (grunt) {
 		},
 		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd hh:MM:ss") %> */\n'
+				banner: '/*! [<%= env %>] <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd hh:MM:ss") %> */\n'
 			},
 			vendor: {
 				src: [
@@ -65,8 +75,24 @@ module.exports = function (grunt) {
 					mangle: false,
 					beautify: true,
 					compress: {
+						global_defs: {
+							APPLICATION_ENV: grunt.config('env')
+						},
 						drop_debugger: false,
 						drop_console: false
+					}
+				}
+			}
+		},
+		ngtemplates: {
+			app: {
+				cwd: 'public',
+				src: 'app/**/*.html',
+				dest: 'public/app.html.js',
+				options: {
+					module: 'Reader',
+					htmlmin: {
+						collapseWhitespace: true
 					}
 				}
 			}
@@ -75,8 +101,8 @@ module.exports = function (grunt) {
 
 	require('load-grunt-tasks')(grunt);
 
-	grunt.registerTask('default', ['build']);
-	grunt.registerTask('build', ['newer:uglify:vendor', 'newer:uglify:app', 'newer:concat:vendor', 'newer:concat:app']);
-	grunt.registerTask('server', ['build', 'connect:server', 'watch']);
+	grunt.registerTask('default', ['clean', 'build']);
+	grunt.registerTask('build', ['newer:uglify', 'newer:concat', 'ngtemplates']);
+	grunt.registerTask('server', ['default', 'connect:server', 'watch']);
 
 };

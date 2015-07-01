@@ -1,7 +1,7 @@
 <?php
 
 try {
-	require '../vendor/autoload.php';
+	require realpath(__DIR__ . '/../vendor/autoload.php');
 	$application = (new Reader\Application())->bootstrap();
 	$application->run();
 } catch (\Exception $e) {

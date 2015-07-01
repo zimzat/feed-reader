@@ -1,3 +1,5 @@
+/* global APPLICATION_ENV */
+
 (function (angular) {
 	'use strict';
 
@@ -22,9 +24,20 @@
 				}
 			});
 		})
-		.constant('config', {
-			apiUrl: 'http://reader.dev/api',
-		})
+		.constant('env', APPLICATION_ENV)
+		.constant('config', (function() {
+			switch (APPLICATION_ENV) {
+				case 'prod':
+					return {
+						apiUrl: 'http://reader.zimzat.com/api'
+					};
+				case 'dev':
+				default:
+					return {
+						apiUrl: 'http://reader.dev/api'
+					};
+			}
+		})())
 		.config(function ($routeProvider, $locationProvider, hotkeysProvider) {
 			$routeProvider
 				.when('/', {
