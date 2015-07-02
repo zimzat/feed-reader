@@ -16,10 +16,11 @@ SELECT
 	last_updated AS dateChecked
 FROM ttrss_feeds;
 
-INSERT INTO Reader.Entry (entryId, feedId, url, title, dateUpdated, dateCreated, isMarked, isRead, dateReadLast)
+INSERT INTO Reader.Entry (entryId, feedId, externalId, url, title, dateUpdated, dateCreated, isMarked, isRead, dateReadLast)
 SELECT
 	ue.int_id AS entryId,
 	ue.feed_id AS feedId,
+	e.guid AS externalId,
 	e.link AS url,
 	e.title AS title,
 	e.updated AS dateUpdated,

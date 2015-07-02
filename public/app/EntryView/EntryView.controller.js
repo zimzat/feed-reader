@@ -9,9 +9,9 @@
 			});
 
 			$scope.entry = Entry.get({}, function() {
-				if (!$scope.entry.isRead) {
-					$scope.action.toggleRead();
-				}
+				Entry.read({}, true, function() {
+					$scope.entry.isRead = 1;
+				});
 
 				$resource(config.apiUrl + '/feed/:feedId', {feedId: $scope.entry.feedId}).get({}, function(data) {
 					$scope.pageTitle = data.title;

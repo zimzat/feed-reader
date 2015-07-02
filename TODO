@@ -1,5 +1,4 @@
 
-Add user credential check and token usage.
 Add ability to add, add, edit, disable, and discover feeds.
 
 Add existing behavior for ImageScrollerView.
@@ -7,4 +6,6 @@ Add existing behavior for ImageScrollerView.
 * Missing: n = load images only.
 * Missing: R = mark all entries read.
 
-Add fullscreen slideshow to regular entry viewer.
+
+Add coloring to 'is marked' and 'is read' buttons on Yes.
+Add buttons, visible only in mobile, to start slideshow or alter interval.
