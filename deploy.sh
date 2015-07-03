@@ -2,7 +2,7 @@
 
 grunt --env=prod
 
-rsync -avzn \
+rsync -avz \
   --delete \
   --exclude=config/env.php \
   --exclude=node_modules \
