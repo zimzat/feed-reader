@@ -1,9 +1,19 @@
 (function(angular) {
     'use strict';
 
-	angular.module('Reader.CategoryList').controller('Reader.CategoryList.Controller', function($scope, $resource, $location, hotkeys, config) {
-		var Category = $resource(config.apiUrl + '/category');
-		$scope.summary = Category.get();
+	angular.module('Reader.CategoryList').controller('Reader.CategoryList.Controller', function($scope, $resource, $location, $timeout, hotkeys, config) {
+		var Category = $resource(config.apiUrl + '/category'),
+			updateFunction = function() {
+				$scope.summary = Category.get({}, function() {
+					updatePromise = $timeout(updateFunction, 300000, false);
+				});
+			},
+			updatePromise;
+
+		updateFunction();
+		$scope.$on('$destroy', function() {
+			$timeout.cancel(updatePromise);
+		});
 
 		$scope.action = {
 			logout: function() {

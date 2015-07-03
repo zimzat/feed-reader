@@ -14,8 +14,10 @@ class Repository {
 		$sql = "
 			SELECT COUNT(*) AS unreadCount
 			FROM Entry AS e
+				JOIN Feed AS f ON (f.feedId = e.feedId)
 			WHERE e.isRead = false
 				AND e.dateCreated >= ?
+				AND f.categoryId != 10
 		";
 		return $this->db->executeQuery($sql, [date('c', strtotime('-48 hours'))])->fetchColumn();
 	}
@@ -116,10 +118,10 @@ class Repository {
 
 	public function getEntry($entryId) {
 		$sql = "
-			SELECT *
+			SELECT e.*, UNCOMPRESS(ec.content) AS content
 			FROM Entry AS e
 				JOIN EntryContent AS ec USING (entryId)
-			WHERE e.entryId = ?;
+			WHERE e.entryId = ?
 		";
 		$bind = [$entryId];
 		return $this->db->executeQuery($sql, $bind)->fetch();

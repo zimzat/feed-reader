@@ -31,7 +31,7 @@
 			switch (APPLICATION_ENV) {
 				case 'prod':
 					return {
-						apiUrl: 'http://reader.zimzat.com/api'
+						apiUrl: 'https://reader.zimzat.com/api'
 					};
 				case 'dev':
 				default:

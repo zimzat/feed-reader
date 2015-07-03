@@ -16,6 +16,7 @@
 			<a style="font-size: 15px;" ng-href="{{entry.url}}">{{entry.title}}</a>
 		</li>
 	</ul>
+
 	<div class="article-content" ng-bind-html="entry.content | sanitize"></div>
 
 	<div style="padding: 3px;">
@@ -26,13 +27,18 @@
 				Navigation
 			</li>
 			<li class="list-group-item clearfix">
-				<button class="btn btn-sm btn-default pull-right" ng-click="action.toggleMarked()">{{entry.isMarked ? 'Yes' : 'No'}}</button>
+				<button class="btn btn-sm pull-right" ng-class="{'btn-default': !entry.isMarked, 'btn-info': entry.isMarked}" ng-click="action.toggleMarked()">{{entry.isMarked ? 'Yes' : 'No'}}</button>
 				Starred
 			</li>
 			<li class="list-group-item clearfix">
-				<button class="btn btn-sm btn-default pull-right" ng-click="action.toggleRead()">{{entry.isRead ? 'No' : 'Yes'}}</button>
+				<button class="btn btn-sm pull-right" ng-class="{'btn-default': entry.isRead, 'btn-info': !entry.isRead}" ng-click="action.toggleRead()">{{entry.isRead ? 'No' : 'Yes'}}</button>
 				Unread
 			</li>
 		</ul>
+
+		<div class="visible-xs text-center">
+			<button class="btn btn-sm btn-default" ng-click="action.showIntervalDelay()">D</button>
+			<button class="btn btn-sm btn-default" ng-click="action.startFullscreenSlideshow()">F</button>
+		</div>
 	</div>
 </div>

@@ -54,6 +54,28 @@ class FeedUpdater {
 	protected function upsertItem($feedId, \PicoFeed\Parser\Item $item) {
 		$entryId = $this->db->executeQuery('SELECT entryId FROM Entry WHERE feedId = ? AND externalId = ?', [$feedId, $item->getId()])->fetchColumn();
 		if ($entryId) {
+			$contentHash = $this->db->executeQuery('SELECT MD5(EntryContent.content) FROM EntryContent WHERE entryId = ? LIMIT 1')->fetchColumn();
+			if ($contentHash === md5($item->getContent())) {
+				return;
+			}
+
+			$this->log()->debug('Updating existing item: [' . $entryId . '] ' . $item->getId());
+
+			$this->db->update('Entry', [
+				'url' => $item->getUrl(),
+				'title' => $item->getTitle(),
+				'dateUpdated' => date('c', $item->getDate()),
+			], [
+				'entryId' => $entryId,
+			]);
+			$this->db->update('EntryContent', [
+				'content' => pack('L', strlen($item->getContent())) . gzcompress($item->getContent()),
+				'dateCreated' => date('c', $item->getDate()),
+				'dateUpdated' => date('c', $item->getDate()),
+			], [
+				'entryId' => $entryId,
+			]);
+
 			return;
 		}
 
@@ -66,13 +88,15 @@ class FeedUpdater {
 					'externalId' => $item->getId(),
 					'url' => $item->getUrl(),
 					'title' => $item->getTitle(),
-					'dateCreated' => date('c'),
+					'dateCreated' => date('c', $item->getDate()),
+					'dateUpdated' => date('c', $item->getDate()),
 				]);
 				$entryId = $this->db->lastInsertId();
 				$this->db->insert('EntryContent', [
 					'entryId' => $entryId,
-					'content' => $item->getContent(),
-					'dateCreated' => date('c'),
+					'content' => pack('L', strlen($item->getContent())) . gzcompress($item->getContent()),
+					'dateCreated' => date('c', $item->getDate()),
+					'dateUpdated' => date('c', $item->getDate()),
 				]);
 			});
 		} catch (\Exception $e) {

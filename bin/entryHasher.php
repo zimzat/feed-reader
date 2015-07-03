@@ -1,5 +1,8 @@
 <?php
 
+echo 'Deprecated', "\n";
+exit;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 $application = (new Reader\Application())->bootstrap();

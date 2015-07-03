@@ -70,6 +70,13 @@
 					Entry.read({}, !$scope.entry.isRead, function() {
 						$scope.entry.isRead = !$scope.entry.isRead * 1;
 					});
+				},
+				showIntervalDelay: function() {
+					FullscreenSlideshow.inputSlideDelay();
+				},
+				startFullscreenSlideshow: function() {
+					FullscreenSlideshow.enableDisable();
+					FullscreenSlideshow.pausePlay();
 				}
 			};
 
@@ -100,7 +107,7 @@
 				combo: 'm',
 				description: 'Move scroll to next image.',
 				callback: function() {
-
+					// FIXME
 				}
 			}).add({
 				combo: 'f',
@@ -127,8 +134,8 @@
 					$scope.action.toggleMarked();
 				}
 			}).add({
-				combo: 'r',
-				description: 'Toggle read on current entry.',
+				combo: 'u',
+				description: 'Toggle unread on current entry.',
 				callback: function() {
 					$scope.action.toggleRead();
 				}
