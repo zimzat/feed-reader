@@ -103,6 +103,7 @@
 		function nextImg() {
 			if (hasNext()) {
 				resizeAndRotateImages();
+				resetTimer();
 			} else {
 				operations.goNextEntry();
 			}

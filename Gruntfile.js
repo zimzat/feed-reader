@@ -61,7 +61,8 @@ module.exports = function (grunt) {
 					'node_modules/angular-route/angular-route.js',
 					'node_modules/angular-resource/angular-resource.js',
 					'node_modules/angular-hotkeys/build/hotkeys.js',
-					'node_modules/jquery/dist/jquery.js'
+					'node_modules/jquery/dist/jquery.js',
+					'node_modules/favico.js/favico.js'
 				],
 				dest: 'public/vendor.min.js'
 			},
@@ -73,7 +74,7 @@ module.exports = function (grunt) {
 				dest: 'public/app.min.js',
 				options: {
 					mangle: false,
-					beautify: true,
+					beautify: grunt.config('env') === 'dev',
 					compress: {
 						global_defs: {
 							APPLICATION_ENV: grunt.config('env')

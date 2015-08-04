@@ -34,6 +34,7 @@ class Application {
 
 	public function bootstrap() {
 		ini_set('session.use_cookies', false);
+		ini_set('session.cache_expire', 360);
 
 		$env = (file_exists(__DIR__ . '/../config/env.php')) ? require __DIR__ . '/../config/env.php' : 'LOCAL';
 		$configFile = __DIR__ . '/../config/' . strtolower($env) . '.php';

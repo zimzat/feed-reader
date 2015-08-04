@@ -1,10 +1,12 @@
 (function(angular) {
     'use strict';
 
-	angular.module('Reader.CategoryList').controller('Reader.CategoryList.Controller', function($scope, $resource, $location, $timeout, hotkeys, config) {
+	angular.module('Reader.CategoryList').controller('Reader.CategoryList.Controller', function($scope, $resource, $location, $timeout, favicon, hotkeys, config) {
 		var Category = $resource(config.apiUrl + '/category'),
 			updateFunction = function() {
-				$scope.summary = Category.get({}, function() {
+				Category.get({}, function(data) {
+					$scope.summary = data;
+					favicon.badge(data.recent);
 					updatePromise = $timeout(updateFunction, 300000, false);
 				});
 			},
@@ -18,7 +20,7 @@
 		$scope.action = {
 			logout: function() {
 				$resource(config.apiUrl + '/authentication/logout').save();
-				delete sessionStorage.authToken;
+				delete localStorage.authToken;
 				$location.url('/login');
 			}
 		};

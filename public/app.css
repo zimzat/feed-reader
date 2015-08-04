@@ -53,6 +53,7 @@
 
 #grid-layout div {
 	padding: 3px;
+	vertical-align: middle;
 }
 
 #grid-layout div:nth-child(3n+1) {
@@ -178,4 +179,8 @@ html, body {
 	color: grey;
 	font-size: 0.5em;
 	display: block;
+}
+
+.article-content img {
+	max-width: 100%;
 }

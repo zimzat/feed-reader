@@ -4,7 +4,7 @@
 	angular.module('Reader')
 		.run(function ($rootScope, $location) {
 			$rootScope.$on('$locationChangeStart', function (event, newLocation) {
-				if (newLocation.indexOf('login') === -1 && !sessionStorage.authToken) {
+				if (newLocation.indexOf('login') === -1 && !localStorage.authToken) {
 					event.preventDefault();
 					$location.url('/login');
 				}
@@ -14,8 +14,8 @@
 			var service = this;
 
 			service.request = function (config) {
-				if (sessionStorage.authToken) {
-					config.headers.Authorization = 'Token ' + sessionStorage.authToken;
+				if (localStorage.authToken) {
+					config.headers.Authorization = 'Token ' + localStorage.authToken;
 				}
 
 				return config;
@@ -23,7 +23,7 @@
 
 			service.response = function (config) {
 				if (config.headers('Authorization')) {
-					sessionStorage.authToken = config.headers('Authorization');
+					localStorage.authToken = config.headers('Authorization');
 				}
 
 				return config;
@@ -31,7 +31,7 @@
 
 			service.responseError = function (response) {
 				if (response.status === 401 && response.config.url.indexOf('login') === -1) {
-					delete sessionStorage.authToken;
+					delete localStorage.authToken;
 					$location.url('/login');
 				}
 

@@ -45,7 +45,7 @@ class FeedUpdater {
 			SELECT f.feedId, f.url
 			FROM Feed AS f
 			WHERE f.isEnabled
-				AND f.dateChecked + INTERVAL IF(f.frequency > 0, f.frequency, 30) MINUTE < ?
+				AND f.dateChecked < ? - INTERVAL IF(f.frequency > 0, f.frequency, 30) MINUTE
 			ORDER BY f.dateChecked ASC
 		";
 		return $this->db->executeQuery($sql, [date('c')])->fetchAll();
@@ -54,7 +54,18 @@ class FeedUpdater {
 	protected function upsertItem($feedId, \PicoFeed\Parser\Item $item) {
 		$entryId = $this->db->executeQuery('SELECT entryId FROM Entry WHERE feedId = ? AND externalId = ?', [$feedId, $item->getId()])->fetchColumn();
 		if ($entryId) {
-			$contentHash = $this->db->executeQuery('SELECT MD5(EntryContent.content) FROM EntryContent WHERE entryId = ? LIMIT 1')->fetchColumn();
+			/* TEMPORARY FOR A FEW RUNS */
+//			$this->db->update('Entry', [
+//				'url' => $item->getUrl(),
+//				'title' => $item->getTitle(),
+//				'dateCreated' => $item->getDate()->format('c'),
+//				'dateUpdated' => $item->getDate()->format('c'),
+//			], [
+//				'entryId' => $entryId,
+//			]);
+			/* TEMPORARY FOR A FEW RUNS */
+
+			$contentHash = $this->db->executeQuery('SELECT MD5(UNCOMPRESS(EntryContent.content)) FROM EntryContent WHERE entryId = ? LIMIT 1', [$entryId])->fetchColumn();
 			if ($contentHash === md5($item->getContent())) {
 				return;
 			}
@@ -64,14 +75,13 @@ class FeedUpdater {
 			$this->db->update('Entry', [
 				'url' => $item->getUrl(),
 				'title' => $item->getTitle(),
-				'dateUpdated' => date('c', $item->getDate()),
+				'dateUpdated' => $item->getDate()->format('c'),
 			], [
 				'entryId' => $entryId,
 			]);
 			$this->db->update('EntryContent', [
 				'content' => pack('L', strlen($item->getContent())) . gzcompress($item->getContent()),
-				'dateCreated' => date('c', $item->getDate()),
-				'dateUpdated' => date('c', $item->getDate()),
+				'dateUpdated' => $item->getDate()->format('c'),
 			], [
 				'entryId' => $entryId,
 			]);
@@ -88,15 +98,15 @@ class FeedUpdater {
 					'externalId' => $item->getId(),
 					'url' => $item->getUrl(),
 					'title' => $item->getTitle(),
-					'dateCreated' => date('c', $item->getDate()),
-					'dateUpdated' => date('c', $item->getDate()),
+					'dateCreated' => $item->getDate()->format('c'),
+					'dateUpdated' => $item->getDate()->format('c'),
 				]);
 				$entryId = $this->db->lastInsertId();
 				$this->db->insert('EntryContent', [
 					'entryId' => $entryId,
 					'content' => pack('L', strlen($item->getContent())) . gzcompress($item->getContent()),
-					'dateCreated' => date('c', $item->getDate()),
-					'dateUpdated' => date('c', $item->getDate()),
+					'dateCreated' => $item->getDate()->format('c'),
+					'dateUpdated' => $item->getDate()->format('c'),
 				]);
 			});
 		} catch (\Exception $e) {

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-grunt --env=prod clean build
+grunt --env=titan clean build
 
 rsync -avz \
   --delete \
@@ -8,4 +8,4 @@ rsync -avz \
   --exclude=node_modules \
   --exclude=nbproject \
   . \
-  zimzat@zimzat.com:/home/zimzat/apps/reader
+  titan:/var/www/reader.zimzat.com

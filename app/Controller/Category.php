@@ -19,7 +19,15 @@ class Category {
 	}
 
 	public function get($categoryId) {
+		if (!$categoryId) {
+			return ['title' => 'Recent Entries', 'categoryId' => 0];
+		}
 		return $this->application->db->select('Category', ['categoryId' => $categoryId])->fetch();
+	}
+
+	public function search() {
+		$repository = new \Reader\Repository($this->application->db);
+		return $repository->getCategories();
 	}
 
 	public function listFeed($categoryId) {

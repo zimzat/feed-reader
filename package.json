@@ -28,6 +28,7 @@
     "angular-resource": "^1.4.1",
     "angular-route": "^1.4.1",
     "bootstrap": "^3.3.5",
+    "favico.js": "^0.3.8",
     "jquery": "^2.1.4"
   }
 }

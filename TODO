@@ -7,3 +7,6 @@ Add existing behavior for ImageScrollerView.
 * Missing: n = load images only.
 * Missing: R = mark all entries read.
 * Missing: , = mark entry under mouse as marked.
+
+Fix 'Recent Entries' category name display.
+Add 'new feed' interface /feed?url=%s

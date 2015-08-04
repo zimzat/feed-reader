@@ -1,10 +1,11 @@
 /* global APPLICATION_ENV */
 
-(function (angular) {
+(function(angular) {
 	'use strict';
 
 	angular.module('Reader', [
 		'Reader.Login',
+		'Reader.Manage',
 		'Reader.CategoryList',
 		'Reader.FeedList',
 		'Reader.EntryList',
@@ -15,14 +16,14 @@
 	]);
 
 	angular.module('Reader')
-		.run(function($location, $resource, hotkeys, config) {
+		.run(function($resource, $window, hotkeys, config) {
 			hotkeys.add({
 				combo: 'l',
 				description: 'Logout',
 				callback: function() {
 					$resource(config.apiUrl + '/authentication/logout').save();
-					delete sessionStorage.authToken;
-					$location.url('/login');
+					delete localStorage.authToken;
+					$window.location.pathname = '/login'; // Force page refresh so login autocompletes again.
 				}
 			});
 		})
@@ -33,6 +34,10 @@
 					return {
 						apiUrl: 'https://reader.zimzat.com/api'
 					};
+				case 'titan':
+					return {
+						apiUrl: 'https://reader.zimzat.com/api'
+					};
 				case 'dev':
 				default:
 					return {
@@ -40,11 +45,15 @@
 					};
 			}
 		})())
-		.config(function ($routeProvider, $locationProvider, $httpProvider, hotkeysProvider) {
+		.config(function($routeProvider, $locationProvider, $httpProvider, hotkeysProvider) {
 			$routeProvider
 				.when('/login', {
 					templateUrl: 'app/Login/Login.html',
 					controller: 'Reader.Login.Controller'
+				})
+				.when('/manage/feed', {
+					templateUrl: 'app/Manage/Feed.html',
+					controller: 'Reader.Manage.Feed.Controller'
 				})
 				.when('/', {
 					templateUrl: 'app/CategoryList/CategoryList.html',

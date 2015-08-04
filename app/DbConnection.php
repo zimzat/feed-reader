@@ -15,8 +15,8 @@ class DbConnection extends \Doctrine\DBAL\Connection {
 		parent::delete($this->quoteIdentifier($tableExpression), $this->quoteKeys($data), $this->quoteKeys($types));
 	}
 
-	public function select($tableExpression, array $identifier, array $types = array()) {
-		$sql = 'SELECT * FROM ' . $this->quoteIdentifier($tableExpression) . ' WHERE ' . implode(' = ? AND ', array_keys($this->quoteKeys($identifier))) . ' = ?';
+	public function select($tableExpression, array $identifier = array(), array $types = array()) {
+		$sql = 'SELECT * FROM ' . $this->quoteIdentifier($tableExpression) . ($identifier ? ' WHERE ' . implode(' = ? AND ', array_keys($this->quoteKeys($identifier))) . ' = ?' : '');
 		return $this->executeQuery($sql, array_values($identifier), array_values($types));
 	}
 
@@ -28,7 +28,7 @@ class DbConnection extends \Doctrine\DBAL\Connection {
 			$update[] = $key . ' = VALUES(' . $key . ')';
 		}
 
-		$sql = 'INSERT INTO ' . $this->quoteIdentifier($tableExpression) . ' SET ' . implode(' = ? AND ', $quotedIdentifiers) . ' = ?'
+		$sql = 'INSERT INTO ' . $this->quoteIdentifier($tableExpression) . ' SET ' . implode(' = ?, ', $quotedIdentifiers) . ' = ?'
 			. ' ON DUPLICATE KEY UPDATE ' . $this->quoteIdentifier($autoIncrementKey) . ' = LAST_INSERT_ID(' . $this->quoteIdentifier($autoIncrementKey) . '), ' . implode(', ', $update);
 		return $this->executeUpdate($sql, array_values($data));
 	}

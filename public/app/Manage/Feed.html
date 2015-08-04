@@ -1,0 +1,40 @@
+
+<div class="row">
+	<ul class="list-group">
+		<li class="list-group-item toolbar">
+			<div class="col-xs-2">
+				<a class="btn" href="/">Home</a>
+			</div>
+			<div class="col-xs-8 text-center">
+				Feed Management
+			</div>
+			<div class="col-xs-2"></div>
+		</li>
+	</ul>
+	<div class="form-group" ng-class="{'has-error': urlUpdated && !feed.url, 'has-warning': !feed.url}">
+		<label for="url" class="col-sm-2 control-label">Url</label>
+		<div class="col-sm-10">
+			<input type="url" class="form-control" id="url" ng-model="feed.url" ng-blur="urlUpdated = true">
+		</div>
+	</div>
+	<div class="form-group" ng-class="{'has-error': titleUpdated && !feed.title, 'has-warning': !feed.title}">
+		<label for="title" class="col-sm-2 control-label">Title</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="title" ng-model="feed.title" ng-blur="titleUpdated = true">
+		</div>
+	</div>
+	<div class="form-group" ng-class="{'has-error': categoryUpdated && !feed.categoryId, 'has-warning': !feed.categoryId}">
+		<label for="category" class="col-sm-2 control-label">Category</label>
+		<div class="col-sm-10">
+			<select class="form-control" ng-options="category.categoryId as category.title for category in categories track by category.categoryId" ng-model="feed.categoryId" ng-blur="categoryUpdated = true"></select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="frequency" class="col-sm-2 control-label">Frequency</label>
+		<label for="frequency" class="col-sm-1 control-label">{{feedFrequency()}}</label>
+		<div class="col-sm-9">
+			<input type="range" min="0" max="10080" step="15" class="form-control" id="frequency" ng-model="feed.frequency">
+		</div>
+	</div>
+	<button class="btn btn-success" ng-click="action.save()" ng-disabled="!feed.url || !feed.title || !feed.categoryId">Save</button>
+</div>

@@ -3,11 +3,21 @@
 namespace Reader;
 
 class Repository {
+	use \Reader\Logging;
+
 	/** @var \Reader\DbConnection */
 	protected $db;
 
 	public function __construct(DbConnection $db) {
 		$this->db = $db;
+	}
+
+	public function getCategories() {
+		return $this->db->executeQuery('SELECT categoryId, title FROM Category ORDER BY title')->fetchAll();
+	}
+
+	public function upsertFeed(array $feed) {
+		$this->db->upsert('Feed', 'feedId', array_intersect_key($feed, array_flip(['feedId', 'url', 'title', 'categoryId', 'frequency', 'isEnabled'])));
 	}
 
 	public function getUnreadRecent() {
@@ -74,7 +84,7 @@ class Repository {
 		}
 
 		$sql .= "
-			ORDER BY e.dateCreated DESC
+			ORDER BY e.dateCreated DESC, entryId ASC
 			LIMIT 100
 		";
 		return $this->db->executeQuery($sql, $bind)->fetchAll();
@@ -89,14 +99,14 @@ class Repository {
 					e.title,
 					f.title AS feed,
 					c.title AS category,
-					(DATEDIFF(NOW(), e.dateReadLast) + 1) * RAND() AS randWeight
+					(DATEDIFF(NOW(), e.dateReadLast) + 1) * (50 + RAND() * 25) AS randWeight
 				FROM Entry AS e
 					JOIN Feed AS f USING (feedId)
 					JOIN Category AS c USING (categoryId)
 				WHERE e.isMarked = true
 					AND e.dateCreated > ?
 		";
-		$bind = [date('c', strtotime('-4 months'))];
+		$bind = [date('c', strtotime('-5 months'))];
 		
 		if ($categoryId) {
 			$sql .= " AND f.categoryId = ? ";

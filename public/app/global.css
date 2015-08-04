@@ -83,3 +83,7 @@ html, body {
 	font-size: 0.5em;
 	display: block;
 }
+
+.article-content img {
+	max-width: 100%;
+}

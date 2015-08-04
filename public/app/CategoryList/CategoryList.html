@@ -8,15 +8,17 @@
 			<div class="col-xs-8 text-center">
 				Home
 			</div>
-			<div class="col-xs-2"></div>
+			<div class="col-xs-2 text-right">
+				<a class="btn" href="/manage/feed">Manage</a>
+			</div>
 		</li>
 		<li class="list-group-item item" ng-show="summary.recent">
-			<a href="/category/0/entry">Recent Entries <span class="badge">{{summary.recent}}</span></a>
+			<a href="/category/0/entry">Recent Entries <span class="label label-info">{{summary.recent}}</span></a>
 		</li>
 		<li class="list-group-item item" ng-repeat="category in summary.categories">
 			<a ng-show="category.categoryId == 10" class="pull-left" ng-href="/category/{{category.categoryId}}/entry/image-scroller" style="padding-right: 15px;">#</a>
 			<a class="pull-right" ng-href="/category/{{category.categoryId}}/entry">All</a>
-			<a class="" ng-href="/category/{{category.categoryId}}/feed">{{category.title}} <span class="badge">{{category.unreadCount}}</span></a>
+			<a class="" ng-href="/category/{{category.categoryId}}/feed">{{category.title}} <span class="label label-default">{{category.unreadCount}}</span></a>
 		</li>
 		<li class="list-group-item item">
 			<a href="/category/10/entry/random">Marked Hedonism</a>

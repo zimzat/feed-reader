@@ -54,7 +54,42 @@
 		});
 
 		$scope.action = {
-			markAllRead: function() {},
+			loadMore: function() {
+				Category.query({}, function(data) {
+					function loadImages() {
+						if (!data.length) {
+							return;
+						}
+						var item = data.pop();
+
+						Entry.get({entryId: item.entryId}, function(entry) {
+							$scope.entries.push({
+								entryId: entry.entryId,
+								isMarked: entry.isMarked,
+								images: (function() {
+									var imgs = [];
+									jQuery(entry.content).find('img').addBack('img').each(function() {
+										imgs.push({src: jQuery(this).attr('src')});
+									});
+									return imgs;
+								})()
+							});
+
+							if (data.length) {
+								loadImages();
+							}
+						});
+					}
+
+					loadImages();
+				});
+			},
+			markAllRead: function() {
+				angular.forEach($scope.entries, function(entry) {
+					Entry.read({entryId: entry.entryId}, true);
+				});
+				$scope.entries = [];
+			},
 			markEntry: function(entry) {
 				Entry.mark({entryId: entry.entryId}, !entry.isMarked, function() {
 					entry.isMarked = !entry.isMarked * 1;
@@ -66,7 +101,6 @@
 				}
 			},
 			setHoverEntry: function(entry) {
-				console.log(entry.entryId);
 				hoverEntry = entry;
 			},
 			clearHoverEntry: function() {
@@ -84,15 +118,25 @@
 			combo: 'n',
 			description: 'Next: Load More (if available)',
 			callback: function() {
-				Category.query({}, function(data) {
-					$scope.entries = $scope.entries.concat(data);
-				});
+				$scope.action.loadMore();
 			}
 		}).add({
 			combo: 'm',
 			description: 'Scroll to the next image',
 			callback: function() {
+				var $selected = $('#grid-layout'),
+					offset = $selected.find('img:last').offset();
+				var scrollLeft = Math.floor($selected.scrollLeft());
 
+				$('img').each(function () {
+					var $this = $(this),
+						offsetLeft = Math.floor($this.offset().left),
+						v = offsetLeft - ($selected.width() - $this.width()) / 2;
+					if (v > 1) {
+						$('#grid-layout').scrollLeft(Math.floor(v) + scrollLeft);
+						return false;
+					}
+				});
 			}
 		}).add({
 			combo: ',',
@@ -109,14 +153,28 @@
 		}).add({
 			combo: 'home',
 			description: 'Scroll to the beginning',
-			callback: function() {
+			callback: function(event) {
+				event.preventDefault();
 				document.getElementById('grid-layout').scrollLeft = 0;
 			}
 		}).add({
 			combo: 'end',
 			description: 'Scroll to the end',
-			callback: function() {
+			callback: function(event) {
+				event.preventDefault();
 				document.getElementById('grid-layout').scrollLeft = document.getElementById('grid-layout').scrollWidth;
+			}
+		}).add({
+			combo: 'pageup',
+			callback: function(event) {
+				event.preventDefault();
+				document.getElementById('grid-layout').scrollLeft -= document.getElementById('grid-layout').clientWidth / 3 * 2;
+			}
+		}).add({
+			combo: 'pagedown',
+			callback: function(event) {
+				event.preventDefault();
+				document.getElementById('grid-layout').scrollLeft += document.getElementById('grid-layout').clientWidth / 3 * 2;
 			}
 		});
 	});

@@ -28,6 +28,7 @@
 
 #grid-layout div {
 	padding: 3px;
+	vertical-align: middle;
 }
 
 #grid-layout div:nth-child(3n+1) {

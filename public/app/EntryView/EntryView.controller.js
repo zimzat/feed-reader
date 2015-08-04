@@ -64,6 +64,7 @@
 				toggleMarked: function() {
 					Entry.mark({}, !$scope.entry.isMarked, function() {
 						$scope.entry.isMarked = !$scope.entry.isMarked * 1;
+						$(window).trigger('resize.autoforward');
 					});
 				},
 				toggleRead: function() {
@@ -95,13 +96,19 @@
 				}
 			}).add({
 				combo: 'n',
-				description: 'Next: Go to next entry or back to main page.',
+				description: 'Next: Go to next entry, next image (in slideshow), or back to main page.',
 				callback: function() {
 					if (FullscreenSlideshow.isActive() && FullscreenSlideshow.hasNext()) {
 						FullscreenSlideshow.goNext();
 					} else {
 						$scope.action.goNext();
 					}
+				}
+			}).add({
+				combo: 'N',
+				description: 'Next: Go to the next entry (always).',
+				callback: function() {
+					$scope.action.goNext();
 				}
 			}).add({
 				combo: 'm',

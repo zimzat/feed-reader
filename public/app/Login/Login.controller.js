@@ -1,11 +1,13 @@
 (function (angular) {
 	'use strict';
 
-	angular.module('Reader.Login').controller('Reader.Login.Controller', function ($scope, $location, $resource, hotkeys, config) {
+	angular.module('Reader.Login').controller('Reader.Login.Controller', function ($scope, $location, $resource, hotkeys, favicon, config) {
 		$scope.credentials = {
 			username: '',
 			password: ''
 		};
+
+		favicon.badge(0);
 
 		hotkeys.bindTo($scope).add({
 			combo: 'return',
