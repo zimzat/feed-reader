@@ -99,7 +99,7 @@ class Repository {
 					e.title,
 					f.title AS feed,
 					c.title AS category,
-					(DATEDIFF(NOW(), e.dateReadLast) + 1) * (50 + RAND() * 25) AS randWeight
+					(DATEDIFF(NOW(), e.dateReadLast) + 1) * (1 + RAND() * IF(f.feedId = 134, 50, 75)) AS randWeight
 				FROM Entry AS e
 					JOIN Feed AS f USING (feedId)
 					JOIN Category AS c USING (categoryId)
