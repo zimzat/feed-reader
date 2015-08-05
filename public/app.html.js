@@ -22,7 +22,7 @@ angular.module('Reader').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('app/ImageScrollerView/ImageScrollerView.html',
-    "<div id=\"grid-layout\"><div id=\"grid-loader\" class=\"col-xs-2\" ng-click=\"action.loadMore()\">+</div><div ng-repeat=\"entry in entries\" ng-mouseenter=\"action.setHoverEntry(entry)\" ng-mouseleave=\"action.clearHoverEntry()\" ng-class=\"{'starred': entry.isMarked}\" ng-click=\"action.markEntry(entry)\"><img ng-repeat=\"image in entry.images\" ng-src=\"{{image.src}}\"></div></div>"
+    "<div id=\"grid-layout\"><div id=\"grid-loader\" class=\"col-xs-2\" ng-if=\"mayLoadMore\" ng-click=\"action.loadMore()\">+</div><div ng-repeat=\"entry in entries\" ng-mouseenter=\"action.setHoverEntry(entry)\" ng-mouseleave=\"action.clearHoverEntry()\" ng-class=\"{'starred': entry.isMarked}\" ng-click=\"action.markEntry(entry)\"><img ng-repeat=\"image in entry.images\" ng-src=\"{{image.src}}\"></div></div>"
   );
 
 
